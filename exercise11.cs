@@ -24,80 +24,60 @@ namespace Rextester
         {
             
         }
-        
-        /*
-            Time Complexity: O(2^n)
-            Space Complexity: O(n)
-        */
-        public static bool IsABinarySearchTree1( TreeNode root ) {
-            if( root == null ) {
-                return true;
-            }
-
-            if( root.left != null && root.left.data > root.data  ) {
-                return false;
-            }
-            else if( root.right != null && root.right.data < root.data) {
-                return false;
-            }
-            else {
-                return IsABinarySearchTree1( root.left ) && IsABinarySearchTree1( root.right );
-            }
-        }
     }
 
-public class TrieNode {
+	public class TrieNode {
 
-    private Dictionary<char, TrieNode> _nodeChildren = new Dictionary<char, TrieNode>();
+	    private Dictionary<char, TrieNode> _nodeChildren = new Dictionary<char, TrieNode>();
 
-    public bool HasChildNode(char character) {
-        return _nodeChildren.ContainsKey(character);
-    }
+	    public bool HasChildNode(char character) {
+	        return _nodeChildren.ContainsKey(character);
+	    }
 
-    public void MakeChildNode(char character) {
-        _nodeChildren[character] = new TrieNode();
-    }
+	    public void MakeChildNode(char character) {
+	        _nodeChildren[character] = new TrieNode();
+	    }
 
-    public TrieNode GetChildNode(char character) {
-        return _nodeChildren[character];
-    }
+	    public TrieNode GetChildNode(char character) {
+	        return _nodeChildren[character];
+	    }
 
-}
+	}
 
-public class Trie {
+	public class Trie {
 
-    private const char EndOfWordMarker = '\0';
+	    private const char EndOfWordMarker = '\0';
 
-    private TrieNode _rootNode = new TrieNode();
+	    private TrieNode _rootNode = new TrieNode();
 
-    public bool CheckPresentAndAdd(string word) {
-        var currentNode = _rootNode;
-        bool isNewWord = false;
+	    public bool CheckPresentAndAdd(string word) {
+	        var currentNode = _rootNode;
+	        bool isNewWord = false;
 
-        // Work downwards through the trie, adding nodes
-        // as needed, and keeping track of whether we add
-        // any nodes.
-        foreach (var character in word) {
-            if( !currentNode.HasChildNode(character) ) {
-                isNewWord = true;
-                currentNode.MakeChildNode(character);
-            }
+	        // Work downwards through the trie, adding nodes
+	        // as needed, and keeping track of whether we add
+	        // any nodes.
+	        foreach (var character in word) {
+	            if( !currentNode.HasChildNode(character) ) {
+	                isNewWord = true;
+	                currentNode.MakeChildNode(character);
+	            }
 
-            currentNode = currentNode.GetChildNode(character);
-        }
+	            currentNode = currentNode.GetChildNode(character);
+	        }
 
-        // Explicitly mark the end of a word.
-        // Otherwise, we might say a word is
-        // present if it is a prefix of a different,
-        // longer word that was added earlier.
-        if( !currentNode.HasChildNode(EndOfWordMarker) )
-        {
-            isNewWord = true;
-            currentNode.MakeChildNode(EndOfWordMarker);
-        }
+	        // Explicitly mark the end of a word.
+	        // Otherwise, we might say a word is
+	        // present if it is a prefix of a different,
+	        // longer word that was added earlier.
+	        if( !currentNode.HasChildNode(EndOfWordMarker) )
+	        {
+	            isNewWord = true;
+	            currentNode.MakeChildNode(EndOfWordMarker);
+	        }
 
-        return isNewWord;
-        
-    }
-}
+	        return isNewWord;
+
+	    }
+	}
 }
